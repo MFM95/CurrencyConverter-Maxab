@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Currency Converter</string>
+    <string name="home_message">Choose the way to convert your currencies!</string>
+</resources>
