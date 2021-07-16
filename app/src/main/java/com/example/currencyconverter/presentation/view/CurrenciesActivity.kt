@@ -2,22 +2,15 @@ package com.example.currencyconverter.presentation.view
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.LinearLayout
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.currencyconverter.R
 import com.example.currencyconverter.core.DaggerFragmentActivity
 import com.example.currencyconverter.core.ViewModelFactory
-import com.example.currencyconverter.core.addFragment
+import com.example.currencyconverter.utils.addFragment
 import com.example.currencyconverter.presentation.uimodel.ConverterType
-import com.example.currencyconverter.presentation.uimodel.CurrencyUIModel
 import com.example.currencyconverter.presentation.viewmodel.CurrencyViewModel
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_converter.*
 import javax.inject.Inject
 
 class CurrenciesActivity : DaggerFragmentActivity() {
@@ -46,7 +39,7 @@ class CurrenciesActivity : DaggerFragmentActivity() {
     }
 
     private fun showCurrenciesFragment() {
-        addFragment(LocalCurrenciesFragment.newInstance(), R.id.flFragmentContainer)
+        addFragment(CurrenciesFragment.newInstance(), R.id.flFragmentContainer)
     }
 
     companion object {

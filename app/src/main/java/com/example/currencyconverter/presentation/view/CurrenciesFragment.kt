@@ -6,24 +6,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.currencyconverter.R
-import com.example.currencyconverter.core.AppConstants
+import com.example.currencyconverter.utils.AppConstants
 import com.example.currencyconverter.core.BaseResponse
 import com.example.currencyconverter.core.ViewModelFactory
-import com.example.currencyconverter.core.addFragment
+import com.example.currencyconverter.utils.addFragment
 import com.example.currencyconverter.data.model.LatestRatesResponse
 import com.example.currencyconverter.presentation.uimodel.ConverterType
 import com.example.currencyconverter.presentation.uimodel.CurrencyUIModel
 import com.example.currencyconverter.presentation.viewmodel.CurrencyViewModel
+import com.example.currencyconverter.utils.NetworkErrorsHelper
+import com.example.currencyconverter.utils.isNetworkConnected
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_currencies.*
 import javax.inject.Inject
 
 
-class LocalCurrenciesFragment : Fragment() {
+class CurrenciesFragment : Fragment() {
 
     private lateinit var currenciesAdapter: CurrenciesAdapter
 
@@ -59,6 +61,7 @@ class LocalCurrenciesFragment : Fragment() {
                 displayLocalCurrencies()
             } else {
                 getFixerCurrencies()
+                observeOnLatestRates()
             }
         }
     }
@@ -73,47 +76,71 @@ class LocalCurrenciesFragment : Fragment() {
     }
 
     private fun displayLocalCurrencies() {
-        val localCurr = ArrayList<Pair<String, Double>>()
-        localCurr.add(Pair("EGP", 18.55))  // Egyptian Pound
-        localCurr.add(Pair("USD", 1.18))  // US Dollar
-        localCurr.add(Pair("GBP", 0.85))  // British Pound
-        localCurr.add(Pair("CAD", 1.48))  // Canadian Dollar
-        localCurr.add(Pair("CHF", 1.08))  // Swiss Franc
-        localCurr.add(Pair("AUD", 1.58))  // Australian Dollar
-        localCurr.add(Pair("JPY", 130.0))  // Japanese Yen
-        localCurr.add(Pair("SAR", 4.43))  // Saudi Riyal
-        localCurr.add(Pair("AED", 4.33))  // UAE Dirham
-        localCurr.add(Pair("KWD", 0.35))  // Kuwaiti Dinar
-        localCurr.add(Pair("QAR", 4.30))  // Qatar Riyal
-        localCurr.add(Pair("OMR", 0.45))  // Rial Omani
-        localCurr.add(Pair("OMR", 0.45))  // Rial Omani
-        currenciesAdapter.results.clear()
-        currenciesAdapter.results.addAll(CurrencyUIModel.map(localCurr))
+        val localCurr = HashMap<String, Double>()
+        localCurr["EGP"] = 18.55
+        localCurr["USD"] = 1.18
+        localCurr["GBP"] =  0.85
+        localCurr["CAD"] = 1.48
+        localCurr["CHF"] = 1.08
+        localCurr["AUD"] = 1.58
+        localCurr["JPY"] = 130.0
+        localCurr["SAR"] = 4.43
+        localCurr["AED"] = 4.33
+        localCurr["KWD"] = 0.35
+        localCurr["QAR"] = 4.30
+        localCurr["OMR"] = 0.45
+        showResults(localCurr)
     }
 
     private fun getFixerCurrencies() {
-        currencyViewModel.getLatestRates()
+        if (requireActivity().isNetworkConnected()) {
+            currencyViewModel.getLatestRates()
+        } else {
+            showError(getString(R.string.internet_error_message))
+        }
+    }
+
+    private fun observeOnLatestRates() {
         currencyViewModel.latestRatesResponse.observe(viewLifecycleOwner, {
             when (it) {
                 is BaseResponse.Success -> {
-                    ((it.data) as LatestRatesResponse).let { response ->
-                        Log.i("latestRatesResponse", response.rates.size.toString())
-                    }
+                    showResults(((it.data) as LatestRatesResponse).rates)
                 }
                 is BaseResponse.Error -> {
-                    if (it.message.isNullOrEmpty())
-                        Log.i(
-                            "latestRatesResponse",
-                            it.errorKind.toString() + " - " + getString(R.string.general_error_message)
-                        )
-                    else
-                        Log.i("latestRatesResponse", it.errorKind.toString() + " - " + it.message)
+                    handleErrors(it)
                 }
                 is BaseResponse.Loading -> {
-                    Log.i("latestRatesResponse", "Loading")
+                    showLoading()
                 }
             }
         })
+    }
+
+    private fun handleErrors(error: BaseResponse.Error) {
+        when (error.errorKind) {
+            NetworkErrorsHelper.ErrorKind.SERVER_DOWN -> {
+                showError(getString(R.string.server_down_error_message))
+            }
+            NetworkErrorsHelper.ErrorKind.TIME_OUT -> {
+                showError(getString(R.string.time_out_error_message))
+            }
+            NetworkErrorsHelper.ErrorKind.UNEXPECTED -> {
+                if (error.message.isNullOrEmpty())
+                    showError(getString(R.string.general_error_message))
+                else
+                    showError(error.message)
+            }
+            else -> showError(getString(R.string.general_error_message))
+
+        }
+
+    }
+
+    private fun showError(message: String) {
+        Snackbar.make(clCurrencyRootView, message, Snackbar.LENGTH_LONG)
+            .setAction("DISMISS") { }
+            .setActionTextColor(resources.getColor(android.R.color.holo_red_light))
+            .show()
     }
 
 
@@ -126,10 +153,25 @@ class LocalCurrenciesFragment : Fragment() {
         )
     }
 
+    private fun showLoading() {
+        clBaseCurrency.visibility = View.GONE
+        rvCurrenciesList.visibility = View.GONE
+        progressLoading.visibility = View.VISIBLE
+
+    }
+
+    private fun showResults(list: HashMap<String, Double>) {
+        progressLoading.visibility = View.GONE
+        clBaseCurrency.visibility = View.VISIBLE
+        rvCurrenciesList.visibility = View.VISIBLE
+        currenciesAdapter.results.clear()
+        currenciesAdapter.results.addAll(CurrencyUIModel.map(list))
+    }
+
     companion object {
         @JvmStatic
         fun newInstance() =
-            LocalCurrenciesFragment().apply {
+            CurrenciesFragment().apply {
                 arguments = Bundle().apply {
 
                 }

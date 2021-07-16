@@ -10,10 +10,10 @@ data class CurrencyUIModel(
     var rate: Double
 ): Parcelable {
     companion object {
-        fun map(list: ArrayList<Pair<String, Double>>): ArrayList<CurrencyUIModel> {
+        fun map(list: HashMap<String, Double>): ArrayList<CurrencyUIModel> {
             val result = ArrayList<CurrencyUIModel>()
             list.forEach {
-                result.add(CurrencyUIModel(it.first, it.second))
+                result.add(CurrencyUIModel(it.key, it.value))
             }
             return result
         }

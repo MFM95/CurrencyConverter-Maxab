@@ -1,4 +1,4 @@
-package com.example.currencyconverter.core
+package com.example.currencyconverter.utils
 
 object NetworkErrorsHelper {
     fun getErrorKind(statusCode: Int): ErrorKind {

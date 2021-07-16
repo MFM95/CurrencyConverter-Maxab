@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.currencyconverter.R
-import com.example.currencyconverter.core.showKeyboard
 import com.example.currencyconverter.presentation.uimodel.CurrencyUIModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_calculator.*

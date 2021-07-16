@@ -1,6 +1,6 @@
 package com.example.currencyconverter.core.di
 
-import com.example.currencyconverter.presentation.view.LocalCurrenciesFragment
+import com.example.currencyconverter.presentation.view.CurrenciesFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -8,6 +8,6 @@ import dagger.android.ContributesAndroidInjector
 abstract class FragmentBuilder {
 
     @ContributesAndroidInjector(modules = [])
-    internal abstract fun provideLocalCurrenciesFragment(): LocalCurrenciesFragment
+    internal abstract fun provideLocalCurrenciesFragment(): CurrenciesFragment
 
 }

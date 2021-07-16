@@ -1,6 +1,6 @@
 package com.example.currencyconverter.core.di
 
-import com.example.currencyconverter.core.AppConstants
+import com.example.currencyconverter.utils.AppConstants
 import com.example.currencyconverter.core.RetrofitServiceGenerator
 import com.example.currencyconverter.data.repository.FixerRepositoryImpl
 import com.example.currencyconverter.data.source.remote.FixerAPIService

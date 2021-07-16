@@ -3,14 +3,11 @@ package com.example.currencyconverter.presentation.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.currencyconverter.core.BaseResponse
-import com.example.currencyconverter.core.BaseViewModel
-import com.example.currencyconverter.core.NetworkErrorsHelper
+import com.example.currencyconverter.utils.NetworkErrorsHelper
 import com.example.currencyconverter.data.model.LatestRatesResponse
 import com.example.currencyconverter.domain.interactor.GetLatestRatesUseCase
 import com.example.currencyconverter.presentation.uimodel.ConverterType
 import kotlinx.coroutines.*
-import okhttp3.Response
-import okhttp3.ResponseBody
 import java.lang.Exception
 import javax.inject.Inject
 

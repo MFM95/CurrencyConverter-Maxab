@@ -4,4 +4,7 @@
     <string name="local_converter">Local Converter</string>
     <string name="fixer_converter">Fixer.io</string>
     <string name="general_error_message">Something went wrong, please try again later!</string>
+    <string name="server_down_error_message">Sorry, we are facing some issues now, please try again later!</string>
+    <string name="time_out_error_message">Sorry, we are facing some issues now, please try again later!</string>
+    <string name="internet_error_message">Please check your internet connection and try again!</string>
 </resources>
