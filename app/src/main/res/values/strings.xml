@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Currency Converter</string>
     <string name="home_message">Choose the way to convert your currencies!</string>
+    <string name="local_converter">Local Converter</string>
+    <string name="fixer_converter">Fixer.io</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
