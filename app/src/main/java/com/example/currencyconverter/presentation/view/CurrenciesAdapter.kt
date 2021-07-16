@@ -37,7 +37,7 @@ class CurrenciesAdapter : RecyclerView.Adapter<CurrenciesAdapter.CurrencyViewHol
 
         fun bind(item: CurrencyUIModel) {
             itemView.tvCurrencyName.text = item.currency
-            itemView.tvCurrencyValue.text = item.rate.toString()
+            itemView.tvCurrencyValue.text = String.format("%.2f", item.rate)
             itemView.viewDivider.isVisible = (results.indexOf(item) != results.size - 1)
         }
 

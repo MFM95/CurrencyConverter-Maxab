@@ -76,7 +76,7 @@ class CurrenciesFragment : Fragment() {
     }
 
     private fun displayLocalCurrencies() {
-        val localCurr = HashMap<String, Double>()
+        val localCurr = LinkedHashMap<String, Double>()
         localCurr["EGP"] = 18.55
         localCurr["USD"] = 1.18
         localCurr["GBP"] =  0.85

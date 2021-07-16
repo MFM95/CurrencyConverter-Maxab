@@ -39,7 +39,9 @@
         android:id="@+id/rvCurrenciesList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/clBaseCurrency" />
+        app:layout_constraintTop_toBottomOf="@id/clBaseCurrency"
+        android:paddingBottom="100dp"
+        />
 
     <ProgressBar
         android:id="@+id/progressLoading"
