@@ -3,6 +3,7 @@ package com.example.currencyconverter.presentation.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.currencyconverter.R
+import com.example.currencyconverter.presentation.uimodel.ConverterType
 import kotlinx.android.synthetic.main.activity_main.*
 
 class HomeActivity : AppCompatActivity() {
@@ -14,8 +15,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        btnHomeLocalConverter.setOnClickListener { startActivity(CurrenciesActivity.getIntent(this)) }
-        btnHomeFixerConverter.setOnClickListener { startActivity(CurrenciesActivity.getIntent(this)) }
+        btnHomeLocalConverter.setOnClickListener { startActivity(CurrenciesActivity.getIntent(this, ConverterType.LOCAL)) }
+        btnHomeFixerConverter.setOnClickListener { startActivity(CurrenciesActivity.getIntent(this, ConverterType.FIXER)) }
     }
 
 

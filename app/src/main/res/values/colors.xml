@@ -11,4 +11,5 @@
     <color name="light_gray">#DBD3D8</color>
     <color name="violet">#44344F</color>
     <color name="russian_black">#2E282A</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

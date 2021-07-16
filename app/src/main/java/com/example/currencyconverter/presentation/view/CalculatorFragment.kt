@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.currencyconverter.R
+import com.example.currencyconverter.core.showKeyboard
 import com.example.currencyconverter.presentation.uimodel.CurrencyUIModel
-import kotlinx.android.synthetic.main.activity_converter.*
-import kotlinx.android.synthetic.main.activity_converter.tvBaseCurrency
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_calculator.*
 
 
@@ -20,6 +20,7 @@ class CalculatorFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AndroidSupportInjection.inject(this)
         getData()
     }
 
@@ -43,6 +44,7 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun init() {
+//        requireActivity().showKeyboard()
         tvBaseCurrency.text = baseCurrency
         tvSelectedCurrency.text = selectedCurrency?.currency
         tvSelectedRate.text = selectedCurrency?.rate.toString()

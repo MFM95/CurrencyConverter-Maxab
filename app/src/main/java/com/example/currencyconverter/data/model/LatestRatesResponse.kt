@@ -1,9 +1,10 @@
 package com.example.currencyconverter.data.model
 
-data class LatestCurrenciesResponse(
+data class LatestRatesResponse(
     val base: String,
     val date: String,
-    val rates: Rates,
+    val error: Error,
+    val rates: HashMap<String, Double>,
     val success: Boolean,
     val timestamp: Int
 )

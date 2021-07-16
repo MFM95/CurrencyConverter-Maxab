@@ -34,6 +34,7 @@
             android:textColor="@color/dark_gray"
             android:text="1.00"
             android:inputType="numberDecimal"
+            android:background="@color/transparent"
             />
 
         <TextView

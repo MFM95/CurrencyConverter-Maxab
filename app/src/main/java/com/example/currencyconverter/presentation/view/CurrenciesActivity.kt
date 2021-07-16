@@ -7,66 +7,57 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.LinearLayout
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.currencyconverter.R
+import com.example.currencyconverter.core.DaggerFragmentActivity
+import com.example.currencyconverter.core.ViewModelFactory
 import com.example.currencyconverter.core.addFragment
+import com.example.currencyconverter.presentation.uimodel.ConverterType
 import com.example.currencyconverter.presentation.uimodel.CurrencyUIModel
+import com.example.currencyconverter.presentation.viewmodel.CurrencyViewModel
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_converter.*
+import javax.inject.Inject
 
-class CurrenciesActivity : AppCompatActivity() {
+class CurrenciesActivity : DaggerFragmentActivity() {
 
 
-    private lateinit var currenciesAdapter: CurrenciesAdapter
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory<CurrencyViewModel>
+    private val currencyViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory).get(
+            CurrencyViewModel::class.java
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AndroidInjection.inject(this)
         setContentView(R.layout.activity_converter)
-        setUpRecyclerView()
-        displayLocalCurrencies()
+        getData()
     }
 
-    private fun setUpRecyclerView() {
-        currenciesAdapter = CurrenciesAdapter()
-        rvCurrenciesList.layoutManager = LinearLayoutManager(this)
-        rvCurrenciesList.adapter = currenciesAdapter
-        currenciesAdapter.itemClickLiveData.observe(this, Observer {
-            Log.i("itemClickLiveData", it.currency)
-            showCalculatorFragment(it)
-        })
+    private fun getData() {
+        intent?.apply {
+            currencyViewModel.converterType = getSerializableExtra(EXTRA_CONVERT_TYPE) as ConverterType
+            showCurrenciesFragment()
+        }
     }
 
-
-    private fun displayLocalCurrencies() {
-        val localCurr = ArrayList<Pair<String, Double>>()
-        localCurr.add(Pair("EGP", 18.55))  // Egyptian Pound
-        localCurr.add(Pair("USD", 1.18))  // US Dollar
-        localCurr.add(Pair("GBP", 0.85))  // British Pound
-        localCurr.add(Pair("CAD", 1.48))  // Canadian Dollar
-        localCurr.add(Pair("CHF", 1.08))  // Swiss Franc
-        localCurr.add(Pair("AUD", 1.58))  // Australian Dollar
-        localCurr.add(Pair("JPY", 130.0))  // Japanese Yen
-        localCurr.add(Pair("SAR", 4.43))  // Saudi Riyal
-        localCurr.add(Pair("AED", 4.33))  // UAE Dirham
-        localCurr.add(Pair("KWD", 0.35))  // Kuwaiti Dinar
-        localCurr.add(Pair("QAR", 4.30))  // Qatar Riyal
-        localCurr.add(Pair("OMR", 0.45))  // Rial Omani
-        localCurr.add(Pair("OMR", 0.45))  // Rial Omani
-        currenciesAdapter.results.clear()
-        currenciesAdapter.results.addAll(CurrencyUIModel.map(localCurr))
-    }
-
-    private fun displayFixerCurrencies() {
-
-    }
-
-    private fun showCalculatorFragment(cur: CurrencyUIModel) {
-        val baseCur = "EUR"
-        addFragment(CalculatorFragment.newInstance(cur, baseCur), R.id.flCalculatorFragmentContainer, addToBackStack = true)
+    private fun showCurrenciesFragment() {
+        addFragment(LocalCurrenciesFragment.newInstance(), R.id.flFragmentContainer)
     }
 
     companion object {
-        fun getIntent(context: Context): Intent {
-            return Intent(context, CurrenciesActivity::class.java)
+        private const val EXTRA_CONVERT_TYPE = "extra_convert_type"
+        fun getIntent(context: Context, type: ConverterType): Intent {
+            val intent = Intent(context, CurrenciesActivity::class.java)
+            val extras: Bundle = Bundle().apply {
+                putSerializable(EXTRA_CONVERT_TYPE, type)
+            }
+            intent.apply { putExtras(extras) }
+            return intent
         }
     }
 
