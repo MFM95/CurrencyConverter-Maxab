@@ -16,8 +16,10 @@
         android:usesCleartextTraffic="true"
         >
 
-        <activity android:name=".presentation.view.CurrenciesActivity"></activity>
-        <activity android:name=".presentation.view.HomeActivity">
+        <activity android:name=".presentation.view.CurrenciesActivity" />
+        <activity android:name=".presentation.view.HomeActivity"
+            android:windowSoftInputMode=""
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
