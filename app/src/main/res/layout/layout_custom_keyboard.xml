@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:elevation="3dp"
+    android:layout_height="match_parent">
+
+    <GridView
+        android:id="@+id/gridKeyboard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"
+        android:background="@color/light_gray"
+        android:horizontalSpacing="1dp"
+        android:verticalSpacing="1dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

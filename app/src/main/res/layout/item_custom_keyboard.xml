@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="100dp"
+    android:layout_height="70dp"
+    android:layout_gravity="center"
+    android:background="@color/white"
+
+    >
+
+    <TextView
+        android:id="@+id/tvKeyboardItemChar"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        tools:text="6" />
+
+    <ImageView
+        android:id="@+id/ivKeyboardItemIcon"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:scaleType="center"
+        android:layout_gravity="center"
+        android:foregroundGravity="center"
+        android:src="@drawable/ic_delete"
+        />
+
+</FrameLayout>
