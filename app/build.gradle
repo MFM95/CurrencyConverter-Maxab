@@ -100,8 +100,5 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.multidex:multidex-instrumentation:2.0.0'
 
-    /**** Keyboard visibility **/
-    implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.3.0'
-
 
 }

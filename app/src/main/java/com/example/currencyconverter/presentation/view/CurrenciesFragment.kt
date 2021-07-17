@@ -1,15 +1,15 @@
 package com.example.currencyconverter.presentation.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.currencyconverter.R
-import com.example.currencyconverter.utils.AppConstants
+import com.example.currencyconverter.core.AppConstants
 import com.example.currencyconverter.core.BaseResponse
 import com.example.currencyconverter.core.ViewModelFactory
 import com.example.currencyconverter.utils.addFragment
@@ -79,7 +79,7 @@ class CurrenciesFragment : Fragment() {
         val localCurr = LinkedHashMap<String, Double>()
         localCurr["EGP"] = 18.55
         localCurr["USD"] = 1.18
-        localCurr["GBP"] =  0.85
+        localCurr["GBP"] = 0.85
         localCurr["CAD"] = 1.48
         localCurr["CHF"] = 1.08
         localCurr["AUD"] = 1.58
@@ -138,8 +138,8 @@ class CurrenciesFragment : Fragment() {
 
     private fun showError(message: String) {
         Snackbar.make(clCurrencyRootView, message, Snackbar.LENGTH_LONG)
-            .setAction("DISMISS") { }
-            .setActionTextColor(resources.getColor(android.R.color.holo_red_light))
+            .setAction(getString(R.string.dismiss_btn)) { }
+            .setActionTextColor(ContextCompat.getColor(requireContext(), R.color.red))
             .show()
     }
 
